@@ -12,11 +12,10 @@ const { hashPassword, comparePassword } = require("../helper/HashPassword");
 // } = require("../../services/common/FindSingleItemServices");
 const { ListServices } = require("../serveces/ListServece");
 const CreateToken = require("../utility/CreateToken");
-// const CloudinaryImage = require("../utility/CloudinaryImage");
 const UserModel = require("../model/UserModel");
 const CloudinaryImage = require("../utility/CloudinaryImage");
 
-exports.registration = async (req, res) => {
+exports.Registration = async (req, res) => {
   try {
     const {
       name,
@@ -65,7 +64,7 @@ exports.registration = async (req, res) => {
 };
 
 
-exports.login = async (req, res) => {
+exports.Login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email) {
@@ -103,7 +102,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.findUserData = async (req, res) => {
+exports.FindUserData = async (req, res) => {
   try {
     const data = await UserModel.findById(req.user.id);
     if (!data) {
@@ -116,12 +115,12 @@ exports.findUserData = async (req, res) => {
   }
 };
 
-exports.findUserList = async (req, res) => {
+exports.FindUserList = async (req, res) => {
   const data = await ListServices(req, UserModel);
   return res.status(200).json(data);
 };
 
-exports.updateUser = async (req, res) => {
+exports.UpdateUser = async (req, res) => {
   try {
     const postBody = req.body;
     const data = await UserModel.findByIdAndUpdate(req.user.id, postBody, {
@@ -138,7 +137,7 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-exports.updateUserImage = async (req, res) => {
+exports.UpdateUserImage = async (req, res) => {
   try {
     const url = await CloudinaryImage(req.files.photo);
 
@@ -155,9 +154,7 @@ exports.updateUserImage = async (req, res) => {
   }
 };
 
-
-
-exports.deleteUser = async (req, res) => {
+exports.DeleteUser = async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.id);
     if (!user) return res.status(400).send("Invalid User");
