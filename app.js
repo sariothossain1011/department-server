@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
+const path = require('path');
 const { readdirSync } = require("fs");
+const fs = require('fs');
 require("./db/conn");
 dotenv.config({ path: "./config.env" });
 
@@ -16,6 +18,7 @@ const expressMongoSanitize = require("express-mongo-sanitize");
 const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
 // const ErrorHandler = require("./middleware/ErrorHandler");
+
 
 
 //security middleware implement
@@ -49,8 +52,7 @@ app.use(limiter);
 
 // routes middleware
 
-readdirSync("./routes").map((r) =>
-  app.use("/api/v1", require(`./routes/${r}`))
-);
+readdirSync("./routes").map((r) =>app.use("/api/v1", require(`./routes/${r}`)));
+
 
 module.exports = app;

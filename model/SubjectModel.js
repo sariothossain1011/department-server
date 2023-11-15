@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 const SubjectSchema = new mongoose.Schema(
   {
     subjectTitle: {
+      type: String,
+    },
+    subjectDescription:{
       type: String,
     },
     subjectImage: {
@@ -10,24 +14,12 @@ const SubjectSchema = new mongoose.Schema(
         default:
           "https://res.cloudinary.com/db8l1ulfq/image/upload/v1682591922/user-profile_tfugwz.png",
       },
-    videos: [
-      {
-        photo: {
-          type: String,
-          default:
-            "https://res.cloudinary.com/db8l1ulfq/image/upload/v1682591922/user-profile_tfugwz.png",
-        },
-        link: {
-          type: String,
-        },
-        title: {
-          type: String,
-        },
-        description: {
-          type: String,
-        },
+      courseId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "course",
+        required: true,
       },
-    ],
+      
     createdDate: {
       type: Date,
       default: Date.now(),
