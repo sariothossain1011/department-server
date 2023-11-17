@@ -72,7 +72,7 @@ exports.UpdateVideo = async (req, res) => {
 exports.DeletedVideo = async (req, res) => {
   try {
     const subject = await VideoModel.findById(req.params.id);
-    if (!subject) return res.status(400).send("Invalid User");
+    if (!subject) return res.status(400).send("Invalid");
 
     const deletedSubject = await VideoModel.findByIdAndDelete(req.params.id);
     if (deletedSubject) {

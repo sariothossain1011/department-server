@@ -157,17 +157,17 @@ exports.UpdateUserImage = async (req, res) => {
 exports.DeleteUser = async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.id);
-    if (!user) return res.status(400).send("Invalid User");
+    if (!user) return res.status(400).send("Invalid");
   
     const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
     if (deletedUser) {
       return res
         .status(200)
-        .send({ success: true, message: "User is deleted!" });
+        .send({ success: true, message: "Deleted!" });
     } else {
       return res
         .status(400)
-        .send({ success: false, message: "User delete fail!" });
+        .send({ success: false, message: "Delete fail!" });
     }
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });
