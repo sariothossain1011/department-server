@@ -1,22 +1,19 @@
 const mongoose = require("mongoose");
 
-const CourseSchema = new mongoose.Schema(
+const BlogSchema = new mongoose.Schema(
   {
     photo: {
       type: String,
       default:
         "https://res.cloudinary.com/db8l1ulfq/image/upload/v1682591922/user-profile_tfugwz.png",
     },
-    semesterName: {
+    title: {
       type: String,
     },
-    semesterTitle: {
+    description: {
       type: String,
     },
-    lectures: {
-      type: String,
-    },
-    students: {
+    note: {
       type: String,
     },
     createdDate:{
@@ -27,5 +24,5 @@ const CourseSchema = new mongoose.Schema(
   { timestamps: false, versionKey: false }
 );
 
-const CourseModel = mongoose.model("course", CourseSchema);
-module.exports = CourseModel;
+const BlogModel = mongoose.model("blog", BlogSchema);
+module.exports = BlogModel;

@@ -14,7 +14,7 @@ exports.CreateSubject = async (req, res) => {
       return res.json({ error: "Subject Name is required" });
     }
     if (!subjectDescription) {
-      return res.json({ error: "SubjectDescription is required" });
+      return res.json({ error: "Subject Description is required" });
     }
     const existsubjectTitle = await SubjectModel.findOne({
       subjectTitle: subjectTitle,
@@ -80,17 +80,17 @@ exports.UpdateSubject = async (req, res) => {
 exports.DeletedSubject = async (req, res) => {
   try {
     const subject = await SubjectModel.findById(req.params.id);
-    if (!subject) return res.status(400).send("Invalid User");
+    if (!subject) return res.status(400).send("Invalid");
 
     const deletedSubject = await SubjectModel.findByIdAndDelete(req.params.id);
     if (deletedSubject) {
       return res
         .status(200)
-        .send({ success: true, message: "User is deleted!" });
+        .send({ success: true, message: "Deleted!" });
     } else {
       return res
         .status(400)
-        .send({ success: false, message: "User delete fail!" });
+        .send({ success: false, message: "Delete fail!" });
     }
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });

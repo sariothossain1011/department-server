@@ -1,36 +1,26 @@
-const CourseModel = require("../model/CourseModel");
+const BlogModel = require("../model/BlogModel");
 const { ListServices } = require("../serveces/ListServece");
 const CloudinaryImage = require("../utility/CloudinaryImage");
 
 
-exports.CreateCourse = async (req, res) => {
+exports.CreateBlog = async (req, res) => {
     try {
 
-      console.log("hello",req.body)
+      const { title, description,note  } = req.body;
 
-
-
-      const { semesterName, semesterTitle  } = req.body;
-      console.log("dsfsfsffffffffffffffffffffffffff")
-      console.log("hello",req.body)
-
-      if (!semesterName) {
-        return res.json({ error: "Semester Name is required!" });
+      if (!title) {
+        return res.json({ error: "Title is required" });
       }
-      if (!semesterTitle) {
-        return res.json({ error: "Semester Title is required!" });
+      if (!description) {
+        return res.json({ error: "Description is required" });
       }
 
-      const existSemesterName = await CourseModel.findOne({ semesterName: semesterName });
-      if (existSemesterName) {
-        return res.status(400).json({
-          status: "fail",
-          message: "This Semester already exist. Try another one.",
-        });
+      if (!note) {
+        return res.json({ error: "Note is required" });
       }
 
-      const data = await new CourseModel({
-        semesterName,semesterTitle
+      const data = await new BlogModel({
+        title,description,note
       }).save();
   
       return res.status(200).json({ status: "success", data: data });
@@ -39,16 +29,16 @@ exports.CreateCourse = async (req, res) => {
     }
   };
 
-  exports.FindCourseList = async (req, res) => {
-    const data = await ListServices(req, CourseModel);
+  exports.FindBlogList = async (req, res) => {
+    const data = await ListServices(req, BlogModel);
     return res.status(200).json(data);
   };
 
-  exports.UpdateCourseImage = async (req, res) => {
+  exports.UpdateBlogImage = async (req, res) => {
     try {
       const url = await CloudinaryImage(req.files.photo);
   
-      const data = await CourseModel.findByIdAndUpdate(
+      const data = await BlogModel.findByIdAndUpdate(
         req.params.id,
         { photo: url },
         {
@@ -61,10 +51,10 @@ exports.CreateCourse = async (req, res) => {
     }
   };
 
-  exports.UpdateCourse = async (req, res) => {
+  exports.UpdateBlog = async (req, res) => {
     try {
       const postBody = req.body;
-      const data = await CourseModel.findByIdAndUpdate(req.params.id, postBody, {
+      const data = await BlogModel.findByIdAndUpdate(req.params.id, postBody, {
         new: true,
       });
       if (!data) {
@@ -79,12 +69,12 @@ exports.CreateCourse = async (req, res) => {
   };
 
 
-  exports.DeleteCourse = async (req, res) => {
+  exports.DeleteBlog = async (req, res) => {
     try {
-      const user = await CourseModel.findById(req.params.id);
+      const user = await BlogModel.findById(req.params.id);
       if (!user) return res.status(400).send("Invalid");
     
-      const deletedUser = await CourseModel.findByIdAndDelete(req.params.id);
+      const deletedUser = await BlogModel.findByIdAndDelete(req.params.id);
       if (deletedUser) {
         return res
           .status(200)

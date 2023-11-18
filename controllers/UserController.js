@@ -142,11 +142,11 @@ exports.DeleteUser = async (req, res) => {
     if (deletedUser) {
       return res
         .status(200)
-        .send({ success: true, message: "User is deleted!" });
+        .send({ success: true, message: "Deleted!" });
     } else {
       return res
         .status(400)
-        .send({ success: false, message: "User delete fail!" });
+        .send({ success: false, message: "Delete fail!" });
     }
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });
