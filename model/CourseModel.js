@@ -10,7 +10,7 @@ const CourseSchema = new mongoose.Schema(
     semesterName: {
       type: String,
     },
-    courseTitle: {
+    semesterTitle: {
       type: String,
     },
     lectures: {

@@ -6,13 +6,19 @@ const CloudinaryImage = require("../utility/CloudinaryImage");
 exports.CreateCourse = async (req, res) => {
     try {
 
-      const { semesterName, courseTitle  } = req.body;
+      console.log("hello",req.body)
+
+
+
+      const { semesterName, semesterTitle  } = req.body;
+      console.log("dsfsfsffffffffffffffffffffffffff")
+      console.log("hello",req.body)
 
       if (!semesterName) {
-        return res.json({ error: "Semester Name is required" });
+        return res.json({ error: "Semester Name is required!" });
       }
-      if (!courseTitle) {
-        return res.json({ error: "Course Title is required" });
+      if (!semesterTitle) {
+        return res.json({ error: "Semester Title is required!" });
       }
 
       const existSemesterName = await CourseModel.findOne({ semesterName: semesterName });
@@ -24,7 +30,7 @@ exports.CreateCourse = async (req, res) => {
       }
 
       const data = await new CourseModel({
-        semesterName,courseTitle
+        semesterName,semesterTitle
       }).save();
   
       return res.status(200).json({ status: "success", data: data });
