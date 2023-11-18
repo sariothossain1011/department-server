@@ -18,7 +18,7 @@ const CloudinaryImage = require("../utility/CloudinaryImage");
 exports.Registration = async (req, res) => {
   try {
     const { name, email, role, image } = req.body;
-    if (!name.trim()) {
+    if (!name) {
       return res.json({ error: "Name is required" });
     }
     if (!email) {
