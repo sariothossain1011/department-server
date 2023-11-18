@@ -17,52 +17,30 @@ const CloudinaryImage = require("../utility/CloudinaryImage");
 
 exports.Registration = async (req, res) => {
   try {
-    const {
-      name,
-      email,
-      password,
-      roll,
-      isAdmin,
-    } = req.body;
+    const { name, email, role, image } = req.body;
     if (!name.trim()) {
       return res.json({ error: "Name is required" });
     }
     if (!email) {
       return res.json({ error: "Email is required" });
     }
-    if (!roll) {
-      return res.json({ error: "Roll is required" });
-    }
-    if (!password || password.length < 6) {
-      return res.json({ error: "Password must be at least 6 characters long" });
-    }
-
-    const existUser = await UserModel.findOne({ email: req.body.email });
-    if (existUser) {
-      return res.status(400).json({
-        status: "fail",
-        message: "This email already exist. Try another one.",
-      });
-    }
-
-    const hashedPassword = await hashPassword(password);
 
     const data = await new UserModel({
       name,
       email,
-      roll,
-      isAdmin,
-      password: hashedPassword,
+      image,
+      role,
     }).save();
+    const token = await CreateToken({ id: data._id });
+    const { ...responseData } = data.toObject();
 
-    const { password: removedPassword, ...responseData } = data.toObject();
-
-    return res.status(200).json({ status: "success", data: responseData });
+    return res
+      .status(200)
+      .json({ status: "success", token: token, data: responseData });
   } catch (error) {
     return res.status(400).json({ status: "fail", data: error.toString() });
   }
 };
-
 
 exports.Login = async (req, res) => {
   try {
@@ -123,7 +101,8 @@ exports.FindUserList = async (req, res) => {
 exports.UpdateUser = async (req, res) => {
   try {
     const postBody = req.body;
-    const data = await UserModel.findByIdAndUpdate(req.user.id, postBody, {
+    const email = req.params.email;
+    const data = await UserModel.findByIdAndUpdate({ email }, postBody, {
       new: true,
     }).select("-password -isAdmin");
     if (!data) {
@@ -158,7 +137,7 @@ exports.DeleteUser = async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.id);
     if (!user) return res.status(400).send("Invalid User");
-  
+
     const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
     if (deletedUser) {
       return res
@@ -172,5 +151,4 @@ exports.DeleteUser = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });
   }
-  
-}; 
+};
