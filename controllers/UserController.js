@@ -24,6 +24,16 @@ exports.Registration = async (req, res) => {
     if (!email) {
       return res.json({ error: "Email is required" });
     }
+    const existUser = await UserModel.findOne({ email: email });
+    let token;
+    let responseData;
+    if (existUser) {
+      token = await CreateToken({ id: existUser._id });
+      responseData = existUser.toObject();
+      return res
+        .status(200)
+        .json({ status: "success", token: token, data: responseData });
+    }
 
     const data = await new UserModel({
       name,
@@ -31,12 +41,10 @@ exports.Registration = async (req, res) => {
       image,
       role,
     }).save();
-    const token = await CreateToken({ id: data._id });
-    const { ...responseData } = data.toObject();
+    token = await CreateToken({ id: data._id });
+    responseData = data.toObject();
 
-    return res
-      .status(200)
-      .json({ status: "success", token: token, data: responseData });
+    return res.status(200).json({ status: "success",token, data: responseData });
   } catch (error) {
     return res.status(400).json({ status: "fail", data: error.toString() });
   }
@@ -140,13 +148,9 @@ exports.DeleteUser = async (req, res) => {
 
     const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
     if (deletedUser) {
-      return res
-        .status(200)
-        .send({ success: true, message: "Deleted!" });
+      return res.status(200).send({ success: true, message: "Deleted!" });
     } else {
-      return res
-        .status(400)
-        .send({ success: false, message: "Delete fail!" });
+      return res.status(400).send({ success: false, message: "Delete fail!" });
     }
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });
