@@ -38,6 +38,21 @@ exports.CreateSubject = async (req, res) => {
 };
 
 
+exports.CourseFindBySubject = async (req, res) => {
+  try {
+    const data = await SubjectModel.find({courseId: req.params.id});
+    if (!data) {
+      return { success: "fail", message: "Not found " };
+    } else {
+      res.status(200).json({ success: "Success", data: data });
+    }
+  } catch (error) {
+    res.status(400).json({ success: "fail", data: error.toString() });
+  }
+};
+
+
+
 exports.FindSubjectList = async (req, res) => {
   const data = await ListServices(req, SubjectModel);
   return res.status(200).json(data);

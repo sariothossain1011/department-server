@@ -5,7 +5,7 @@ const CourseSchema = new mongoose.Schema(
     photo: {
       type: String,
       default:
-        "https://res.cloudinary.com/db8l1ulfq/image/upload/v1682591922/user-profile_tfugwz.png",
+        "https://polybd.com/wp-content/uploads/2020/09/Diploma-In-Electronics-Engineering-Books-PDF-With-Syllabus-2.png",
     },
     semesterName: {
       type: String,
