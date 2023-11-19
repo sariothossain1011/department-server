@@ -8,8 +8,7 @@ exports.requireSignIn = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
 
     req.user = decoded["data"];
-    console.log("auth",req.user)
-    console.log("hello")
+  
     next();
   } catch (error) {
     res.status(500).json({ status: "fail", data: error.toString() });

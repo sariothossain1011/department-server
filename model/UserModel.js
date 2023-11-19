@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema(
   {
-    photo: {
+    image: {
       type: String,
       default:
         "https://res.cloudinary.com/db8l1ulfq/image/upload/v1682591922/user-profile_tfugwz.png",
@@ -10,23 +10,23 @@ const UserSchema = new mongoose.Schema(
     name: {
       type: String,
     },
-    email: {
+    userName: {
       type: String,
     },
-    address: {
+    email: {
       type: String,
     },
     password: {
       type: String,
     },
-    status: {
+    role: {
       type: String,
     },
     roll: {
       type: String,
     },
-    registrationNumber:{
-      type:String,
+    registrationNumber: {
+      type: String,
     },
     department: {
       type: String,
@@ -34,8 +34,8 @@ const UserSchema = new mongoose.Schema(
     semester: {
       type: String,
     },
-    session:{
-      type:String,
+    session: {
+      type: String,
     },
     mobile: {
       type: String,
@@ -43,13 +43,16 @@ const UserSchema = new mongoose.Schema(
     gender: {
       type: String,
     },
-    designation:{
-        type :String,
+    designation: {
+      type: String,
     },
-    createdDate:{
-      type:Date,
-      default:Date.now(),
-    }
+    isAdmin: {
+      type: Boolean
+    },
+    createdDate: {
+      type: Date,
+      default: Date.now(),
+    },
   },
   { timestamps: false, versionKey: false }
 );
