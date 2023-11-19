@@ -2,18 +2,14 @@ const mongoose = require("mongoose");
 
 const BlogSchema = new mongoose.Schema(
   {
-    photo: {
+    image: {
       type: String,
-      default:
-        "https://res.cloudinary.com/db8l1ulfq/image/upload/v1682591922/user-profile_tfugwz.png",
     },
     title: {
       type: String,
+      required: true
     },
-    description: {
-      type: String,
-    },
-    note: {
+    body: {
       type: String,
     },
     createdDate:{
