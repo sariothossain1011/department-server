@@ -10,9 +10,7 @@ const {
 const useRouter = express.Router();
 
 useRouter.post("/create-blog", CreateBlog);
-useRouter.post("/update-course-image/:id", UpdateBlogImage);
-useRouter.post("/find-course-list", FindBlogList);
-useRouter.post("/find-course-list", FindBlogList);
+useRouter.get("/find-blog-list", FindBlogList);
 useRouter.post("/update-course/:id", UpdateBlog);
 useRouter.post("/delete-course/:id", DeleteBlog);
 
