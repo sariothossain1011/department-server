@@ -6,10 +6,10 @@ const useRouter = express.Router();
 
 
 useRouter.post("/create-video",CreateVideo);
-useRouter.post("/find-video-list",FindVideoList);
-useRouter.post("/update-video-image/:id",UpdateVideoImage);
-useRouter.post("/update-video/:id",UpdateVideo);
-useRouter.post("/delete-video/:id",DeletedVideo);
+useRouter.get("/find-video-list",FindVideoList);
+useRouter.put("/update-video-image/:id",UpdateVideoImage);
+useRouter.put("/update-video/:id",UpdateVideo);
+useRouter.delete("/delete-video/:id",DeletedVideo);
 
 useRouter.get("/find-subject-by-video/:id",FindSubjectByVideo);
 module.exports = useRouter

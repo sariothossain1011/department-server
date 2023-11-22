@@ -5,14 +5,7 @@ const CloudinaryImage = require("../utility/CloudinaryImage");
 
 exports.CreateCourse = async (req, res) => {
     try {
-
-      console.log("hello",req.body)
-
-
-
       const { semesterName, semesterTitle  } = req.body;
-      console.log("dsfsfsffffffffffffffffffffffffff")
-      console.log("hello",req.body)
 
       if (!semesterName) {
         return res.json({ error: "Semester Name is required!" });
@@ -36,6 +29,20 @@ exports.CreateCourse = async (req, res) => {
       return res.status(200).json({ status: "success", data: data });
     } catch (error) {
       return res.status(400).json({ status: "fail", data: error.toString() });
+    }
+  };
+
+
+exports.FindCourseData = async (req, res) => {
+    try {
+      const data = await CourseModel.findById(req.params.id);
+      if (!data) {
+        return { success: "fail", message: "Not found " };
+      } else {
+        res.status(200).json({ success: "Success", data: data });
+      }
+    } catch (error) {
+      res.status(400).json({ success: "fail", data: error.toString() });
     }
   };
 

@@ -4,10 +4,10 @@ const { CreateSubject, FindSubjectList, UpdateSubjectImage, UpdateSubject, Delet
 const useRouter = express.Router();
 
 useRouter.post("/create-subject",CreateSubject);
-useRouter.post("/find-subject-list",FindSubjectList);
-useRouter.post("/update-subject-image/:id",UpdateSubjectImage);
-useRouter.post("/update-subject/:id",UpdateSubject);
-useRouter.post("/delete-subject/:id",DeletedSubject);
+useRouter.get("/find-subject-list",FindSubjectList);
+useRouter.put("/update-subject-image/:id",UpdateSubjectImage);
+useRouter.put("/update-subject/:id",UpdateSubject);
+useRouter.delete("/delete-subject/:id",DeletedSubject);
 
 
 

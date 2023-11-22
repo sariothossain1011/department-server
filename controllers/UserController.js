@@ -1,15 +1,7 @@
 const mongoose = require("mongoose");
 
 const { hashPassword, comparePassword } = require("../helper/HashPassword");
-// const BorrowModel = require("../../models/books/BorrowModel");
-// const UserModel = require("../../models/users/UserModel");
-// const {
-//   CheckAssociateService,
-// } = require("../../services/common/CheckAssociateService");
-// const { deleteServices } = require("../../services/common/DeleteServices");
-// const {
-//   FindSingleItemServices,
-// } = require("../../services/common/FindSingleItemServices");
+
 const { ListServices } = require("../serveces/ListServece");
 const CreateToken = require("../utility/CreateToken");
 const UserModel = require("../model/UserModel");
