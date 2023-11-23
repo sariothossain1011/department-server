@@ -22,6 +22,9 @@ const UserSchema = new mongoose.Schema(
     role: {
       type: String,
     },
+    mobile: {
+      type: String,
+    },
     roll: {
       type: String,
     },
