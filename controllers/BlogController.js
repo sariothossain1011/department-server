@@ -4,7 +4,8 @@ const { ListServices } = require("../serveces/ListServece");
 const CloudinaryImage = require("../utility/CloudinaryImage");
 exports.CreateBlog = async (req, res) => {
   try {
-    const { title, body } = req.body;
+    const { title, body, image } = req.body;
+    console.log("body", req.body);
 
     if (!title) {
       return res.json({ error: "Title is required" });
@@ -12,12 +13,16 @@ exports.CreateBlog = async (req, res) => {
     if (!body) {
       return res.json({ error: "Post body is required" });
     }
+     if (!image) {
+       return res.json({ error: "Image is required" });
+     }
 
     const data = await new BlogModel({
       title,
       body,
+      image,
     }).save();
-
+console.log("data", data);
     return res.status(200).json({ status: "success", data: data });
   } catch (error) {
     return res.status(400).json({ status: "fail", data: error.toString() });
