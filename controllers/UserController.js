@@ -9,7 +9,7 @@ const CloudinaryImage = require("../utility/CloudinaryImage");
 
 exports.Registration = async (req, res) => {
   try {
-    const { name, email, role, image } = req.body;
+    const { name, email, role, image, password } = req.body;
     if (!name) {
       return res.json({ error: "Name is required" });
     }
@@ -36,7 +36,9 @@ exports.Registration = async (req, res) => {
     token = await CreateToken({ id: data._id });
     responseData = data.toObject();
 
-    return res.status(200).json({ status: "success",token, data: responseData });
+    return res
+      .status(200)
+      .json({ status: "success", token, data: responseData });
   } catch (error) {
     return res.status(400).json({ status: "fail", data: error.toString() });
   }
