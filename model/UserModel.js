@@ -19,14 +19,15 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
     },
-    role: {
+    roll: {
       type: String,
     },
     mobile: {
       type: String,
     },
-    roll: {
+    role: {
       type: String,
+      default:"user"
     },
     registrationNumber: {
       type: String,

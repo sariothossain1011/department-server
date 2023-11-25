@@ -9,12 +9,15 @@ const CloudinaryImage = require("../utility/CloudinaryImage");
 
 exports.Registration = async (req, res) => {
   try {
-    const { name, email, role, image } = req.body;
+    const { name, email, password } = req.body;
     if (!name) {
       return res.json({ error: "Name is required" });
     }
     if (!email) {
       return res.json({ error: "Email is required" });
+    }
+    if (!password) {
+      return res.json({ error: "Password is required" });
     }
     const existUser = await UserModel.findOne({ email: email });
     let token;
@@ -30,13 +33,14 @@ exports.Registration = async (req, res) => {
     const data = await new UserModel({
       name,
       email,
-      image,
-      role,
+      password
     }).save();
     token = await CreateToken({ id: data._id });
     responseData = data.toObject();
 
-    return res.status(200).json({ status: "success",token, data: responseData });
+    return res
+      .status(200)
+      .json({ status: "success", token, data: responseData });
   } catch (error) {
     return res.status(400).json({ status: "fail", data: error.toString() });
   }
@@ -146,5 +150,31 @@ exports.DeleteUser = async (req, res) => {
     }
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+exports.UpdateIsAdmin = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const role = 'admin';
+
+
+    const existUser = await UserModel.findById({ _id: id });
+    if (!existUser) {
+      return res.status(400).json({
+        status: "fail",
+        message: "User does not exist",
+      });
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      id,
+      { $set: { role: role } },
+      { new: true }
+    );
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    return res.status(400).json({ status: "fail", data: error.toString() });
   }
 };

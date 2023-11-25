@@ -9,7 +9,7 @@ const SubjectSchema = new mongoose.Schema(
     subjectDescription:{
       type: String,
     },
-    subjectImage: {
+    photo: {
         type: String,
         default:
           "https://res.cloudinary.com/db8l1ulfq/image/upload/v1682591922/user-profile_tfugwz.png",
