@@ -7,7 +7,7 @@ useRouter.post("/create-course",CreateCourse);
 useRouter.get("/find-course-data/:id",FindCourseData);
 useRouter.put("/update-course-image/:id",UpdateCourseImage);
 useRouter.get("/find-course-list",FindCourseList);
-useRouter.put("/update-course/:id",UpdateCourse);
+useRouter.patch("/update-course/:id",UpdateCourse);
 useRouter.delete("/delete-course/:id",DeleteCourse);
 
 

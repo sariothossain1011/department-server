@@ -5,6 +5,7 @@ const CloudinaryImage = require("../utility/CloudinaryImage");
 exports.CreateSubject = async (req, res) => {
   try {
     const { subjectTitle, subjectDescription, courseId } = req.body;
+    const photo = await CloudinaryImage(req.files.photo);
     // Check if courseId is present in req.body
     if (!courseId) {
       return res.json({ error: "Course ID is required" });
@@ -25,10 +26,14 @@ exports.CreateSubject = async (req, res) => {
         message: "This subject already exist. Try another one.",
       });
     }
+    if (!photo) {
+      return res.json({ error: "Photo Title is required!" });
+    }
     const data = await new SubjectModel({
       subjectTitle,
       subjectDescription,
       courseId,
+      photo
     })
     await data.save();
     return res.status(200).json({ status: "success", data: data });
@@ -77,8 +82,15 @@ exports.UpdateSubjectImage = async (req, res) => {
 
 exports.UpdateSubject = async (req, res) => {
   try {
-    const postBody = req.body;
-    const data = await SubjectModel.findByIdAndUpdate(req.params.id, postBody, {
+    const { subjectTitle, subjectDescription, courseId } = req.body;
+    const photo = await CloudinaryImage(req.files.photo);
+      const updatedSubject = {
+        subjectTitle: subjectTitle,
+        subjectDescription: subjectDescription,
+        courseId:courseId,
+        photo: photo,
+      };
+    const data = await SubjectModel.findByIdAndUpdate(req.params.id, updatedSubject, {
       new: true,
     });
     if (!data) {

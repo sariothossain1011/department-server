@@ -6,12 +6,16 @@ const CloudinaryImage = require("../utility/CloudinaryImage");
 exports.CreateCourse = async (req, res) => {
     try {
       const { semesterName, semesterTitle  } = req.body;
+      const photo = await CloudinaryImage(req.files.photo);
 
       if (!semesterName) {
         return res.json({ error: "Semester Name is required!" });
       }
       if (!semesterTitle) {
         return res.json({ error: "Semester Title is required!" });
+      }
+      if (!photo) {
+        return res.json({ error: "Photo Title is required!" });
       }
 
       const existSemesterName = await CourseModel.findOne({ semesterName: semesterName });
@@ -23,7 +27,7 @@ exports.CreateCourse = async (req, res) => {
       }
 
       const data = await new CourseModel({
-        semesterName,semesterTitle
+        photo,semesterName,semesterTitle
       }).save();
   
       return res.status(200).json({ status: "success", data: data });
@@ -70,20 +74,29 @@ exports.FindCourseData = async (req, res) => {
 
   exports.UpdateCourse = async (req, res) => {
     try {
-      const postBody = req.body;
-      const data = await CourseModel.findByIdAndUpdate(req.params.id, postBody, {
+      const { semesterName, semesterTitle } = req.body;
+      const photo = await CloudinaryImage(req.files.photo);
+      const updatedCourse = {
+        semesterName: semesterName,
+        semesterTitle: semesterTitle,
+        photo: photo,
+      };
+  
+      const data = await CourseModel.findByIdAndUpdate(req.params.id, updatedCourse, {
         new: true,
       });
+  
       if (!data) {
-        return res
-          .status(404)
-          .send({ success: "fail", message: "Update fail !" });
+        return res.status(404).json({ success: false, message: "Course not found" });
       }
-      res.status(200).json({ success: "success", data: data });
+  
+      res.status(200).json({ success: true, data: data });
     } catch (error) {
-      return res.status(400).json({ success: "fail", data: error.toString() });
+      console.error("Error updating course:", error);
+      return res.status(400).json({ success: false, message: error.message });
     }
   };
+  
 
 
   exports.DeleteCourse = async (req, res) => {
