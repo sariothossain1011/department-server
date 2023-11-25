@@ -21,11 +21,17 @@ const hpp = require("hpp");
 
 //security middleware implement
 app.use(fileUpload({ useTempFiles: true }));
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+const corsOptions = {
+  methods: ["GET", "POST", "PUT", "PATCH", "HEAD", "DELETE"],
+  origin: [
+    "http://localhost:5173",
+    "https://cse-education.com",
+    "https://res.cloudinary.com",
+  ],
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 app.use(morgan());
 app.use(bodyParser.json());
 app.use(express.json());
