@@ -4,8 +4,18 @@ const { ListServices } = require("../serveces/ListServece");
 const CloudinaryImage = require("../utility/CloudinaryImage");
 
 exports.CreateTeacher = async (req, res) => {
+      console.log("user", req.body)
+
   try {
-    const { name,email,departmet,mobile,gender,designation } = req.body;
+    const {
+      name,
+      email,
+      department,
+      mobile,
+      gender,
+      designation,
+      facebookLink,
+    } = req.body;
 
     if (!name) {
       return res.json({ error: "Name is required" });
@@ -14,23 +24,27 @@ exports.CreateTeacher = async (req, res) => {
       return res.json({ error: "Email is required" });
     }
 
-    if (!departmet) {
+    if (!department) {
       return res.json({ error: "Department is required" });
     }
     if (!mobile) {
         return res.json({ error: "Mobile is required" });
       }
   
-      if (!gender) {
-        return res.json({ error: "Gender is required" });
-      }
+    
       if (!designation) {
         return res.json({ error: "Designation is required" });
       }
 
 
     const data = await new TeacherModel({
-        name,email,departmet,mobile,gender,designation
+      name,
+      email,
+      department,
+      mobile,
+      gender,
+      designation,
+      facebookLink,
     }).save();
 
     return res.status(200).json({ status: "success", data: data });
