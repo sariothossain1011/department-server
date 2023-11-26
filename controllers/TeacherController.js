@@ -120,3 +120,27 @@ exports.DeleteTeacher = async (req, res) => {
     return res.status(400).json({ success: false, message: error.message });
   }
 };
+exports.UpdateAdmin = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const role = "admin";
+
+    const existUser = await TeacherModel.findById({ _id: id });
+    if (!existUser) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Teacher does not exist",
+      });
+    }
+
+    const updatedUser = await TeacherModel.findByIdAndUpdate(
+      id,
+      { $set: { role: role } },
+      { new: true }
+    );
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    return res.status(400).json({ status: "fail", data: error.toString() });
+  }
+};
