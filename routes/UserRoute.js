@@ -20,8 +20,6 @@ useRouter.patch("/update-user", requireSignIn, UpdateUser);
 useRouter.post("/update-user-image", requireSignIn, UpdateUserImage);
 useRouter.delete("/delete-user/:id", requireSignIn, DeleteUser);
 
-
 useRouter.put("/update-admin/:id", requireSignIn, UpdateIsAdmin);
-
 
 module.exports = useRouter;

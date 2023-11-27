@@ -1,15 +1,15 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
-const path = require('path');
+const path = require("path");
 const { readdirSync } = require("fs");
-const fs = require('fs');
+const fs = require("fs");
 require("./db/conn");
 dotenv.config({ path: "./config.env" });
 
 // SECURITY MIDDLEWARE
 const fileUpload = require("express-fileupload");
-var morgan = require('morgan')
+var morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
 const bodyParser = require("body-parser");
@@ -19,11 +19,19 @@ const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
 // const ErrorHandler = require("./middleware/ErrorHandler");
 
-
-
 //security middleware implement
-app.use(fileUpload({useTempFiles:true}))
-app.use(cors());
+app.use(fileUpload({ useTempFiles: true }));
+const corsOptions = {
+  methods: ["GET", "POST", "PUT", "PATCH", "HEAD", "DELETE"],
+  origin: [
+    "http://localhost:5173",
+    "https://cse-education.com",
+    "https://res.cloudinary.com",
+  ],
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+app.use(cors({ origin: '*' }));
 app.use(morgan());
 app.use(bodyParser.json());
 app.use(express.json());
@@ -31,7 +39,6 @@ app.use(xssClean());
 app.use(expressMongoSanitize());
 app.use(helmet());
 app.use(hpp());
-
 
 // app.use(ErrorHandler)
 app.use((err, req, res, next) => {
@@ -55,7 +62,8 @@ app.get("/", async (req, res) => {
 
 // routes middleware
 
-readdirSync("./routes").map((r) =>app.use("/api/v1", require(`./routes/${r}`)));
-
+readdirSync("./routes").map((r) =>
+  app.use("/api/v1", require(`./routes/${r}`))
+);
 
 module.exports = app;

@@ -9,16 +9,14 @@ const CloudinaryImage = require("../utility/CloudinaryImage");
 
 exports.Registration = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, role, image, password } = req.body;
     if (!name) {
       return res.json({ error: "Name is required" });
     }
     if (!email) {
       return res.json({ error: "Email is required" });
     }
-    if (!password) {
-      return res.json({ error: "Password is required" });
-    }
+  
     const existUser = await UserModel.findOne({ email: email });
     let token;
     let responseData;

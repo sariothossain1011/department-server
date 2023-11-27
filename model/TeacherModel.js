@@ -20,11 +20,9 @@ const TeacherSchema = new mongoose.Schema(
       type: String,
     },
     facebookLink: {
-        type: String,
-      },
-    whatsappLink: {
-        type: String,
+      type: String,
     },
+
     gender: {
       type: String,
     },
