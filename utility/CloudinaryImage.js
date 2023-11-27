@@ -6,15 +6,27 @@ cloudinary.config({
   api_secret: "hQHaYrVEQrB6kqcBc88opqNPxeg", //YOUR_API_SECRET
 });
 
+// const CloudinaryImage = async (file) => {
+//   try {
+//     const result = await cloudinary.uploader.upload(file.tempFilePath);
+//     if (!result.url) {
+//       throw new Error("Image Upload failed");
+//     }
+//     return result.url;
+//   } catch (error) {
+//     throw new Error("Image Upload failed: " + error.toString());
+//   }
+// };
+
 const CloudinaryImage = async (file) => {
   try {
     const result = await cloudinary.uploader.upload(file.tempFilePath);
     if (!result.url) {
-      throw new Error("Image Upload failed");
+      throw new Error('Image Upload failed');
     }
     return result.url;
   } catch (error) {
-    throw new Error("Image Upload failed: " + error.toString());
+    throw new Error('Image Upload failed: ' + error.toString());
   }
 };
 
