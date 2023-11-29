@@ -7,6 +7,12 @@ const fs = require("fs");
 require("./db/conn");
 dotenv.config({ path: "./config.env" });
 
+const directory = '/var/task/tmp';
+// Check if the directory exists, if not, create it
+if (!fs.existsSync(directory)) {
+  fs.mkdirSync(directory, { recursive: true });
+}
+
 // SECURITY MIDDLEWARE
 const fileUpload = require("express-fileupload");
 var morgan = require("morgan");
