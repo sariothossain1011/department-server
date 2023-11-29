@@ -45,6 +45,7 @@ app.use((err, req, res, next) => {
   if (err) {
     res.status(500).json({ message: "The Server Error Here" });
   }
+  next(err);
 });
 
 app.get("/", async (req, res) => {
