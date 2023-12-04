@@ -3,9 +3,6 @@ const express = require("express");
 const { CreateTeacher, FindTeacherList, UpdateTeacherImage, UpdateTeacher, DeleteTeacher, FindTeacherData, UpdateAdmin } = require("../controllers/TeacherController");
 const { requireSignIn } = require("../middleware/Authentication");
 
-
-
-
 const useRouter = express.Router();
 
 useRouter.post("/create-teacher",CreateTeacher);

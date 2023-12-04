@@ -16,7 +16,7 @@ useRouter.put("/registration", Registration);
 // useRouter.get("/login", Login);
 useRouter.get("/find-user", requireSignIn, FindUserData);
 useRouter.get("/find-users", requireSignIn, FindUserList);
-useRouter.patch("/update-user", requireSignIn, UpdateUser);
+useRouter.patch("/update-user/:email", requireSignIn, UpdateUser);
 useRouter.post("/update-user-image", requireSignIn, UpdateUserImage);
 useRouter.delete("/delete-user/:id", requireSignIn, DeleteUser);
 

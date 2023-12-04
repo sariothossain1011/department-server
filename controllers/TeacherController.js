@@ -15,6 +15,7 @@ exports.CreateTeacher = async (req, res) => {
       gender,
       designation,
       facebookLink,
+   
     } = req.body;
 
     if (!name) {
@@ -37,15 +38,7 @@ exports.CreateTeacher = async (req, res) => {
       }
 
 
-    const data = await new TeacherModel({
-      name,
-      email,
-      department,
-      mobile,
-      gender,
-      designation,
-      facebookLink,
-    }).save();
+    const data = await new TeacherModel(req.body).save();
 
     return res.status(200).json({ status: "success", data: data });
   } catch (error) {
