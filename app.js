@@ -17,21 +17,10 @@ const xssClean = require("xss-clean");
 const expressMongoSanitize = require("express-mongo-sanitize");
 const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
-// const ErrorHandler = require("./middleware/ErrorHandler");
 
 //security middleware implement
 app.use(fileUpload({ useTempFiles: true }));
-const corsOptions = {
-  methods: ["GET", "POST", "PUT", "PATCH", "HEAD", "DELETE"],
-  origin: [
-    "http://localhost:5173",
-    "https://cse-education.com",
-    "https://res.cloudinary.com",
-  ],
-  credentials: true, //access-control-allow-credentials:true
-  optionSuccessStatus: 200,
-};
-app.use(cors({ origin: '*' }));
+app.use(cors());
 app.use(morgan());
 app.use(bodyParser.json());
 app.use(express.json());
@@ -45,6 +34,7 @@ app.use((err, req, res, next) => {
   if (err) {
     res.status(500).json({ message: "The Server Error Here" });
   }
+  next();
 });
 
 app.get("/", async (req, res) => {

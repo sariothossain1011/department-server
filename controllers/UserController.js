@@ -103,7 +103,6 @@ exports.FindUserList = async (req, res) => {
 exports.UpdateUser = async (req, res) => {
   try {
     const postBody = req.body;
-    console.log(postBody);
     const email = req.params.email;
     const data = await UserModel.findOneAndUpdate({ email }, postBody, {
       new: true,

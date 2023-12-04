@@ -6,7 +6,7 @@ const CloudinaryImage = require("../utility/CloudinaryImage");
 exports.CreateVideo = async (req, res) => {
   try {
     const {link,title,description, subjectId } = req.body;
-    // Check if courseId is present in req.body
+    const photo = await CloudinaryImage(req.files.photo);
     
     switch (true) {
         case !subjectId?.trim():
@@ -17,10 +17,12 @@ exports.CreateVideo = async (req, res) => {
           return res.json({ error: "title is required" });
         case !description?.trim():
           return res.json({ error: "description is required" });
+          case !photo?.trim():
+          return res.json({ error: "photo is required" });
       }
 
     const data = await new VideoModel({
-        link,title,description, subjectId
+        link,title,description, subjectId,photo
     })
     await data.save();
     return res.status(200).json({ status: "success", data: data });
